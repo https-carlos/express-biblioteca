@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>Biblioteca</title>
+    
+</head>
+
+<body>
+    <div class="container mt-5">
+        <form action="/buscar" method="get" id="form">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="livro" name="titulo">
+                        <label for="livro">Título do livro</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="Radio1" value="option1" checked>
+                        <label class="form-check-label" for="Radio1">
+                            Buscar por título
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="ano" name="ano" disabled>
+                        <label for="livro">Ano do livro</label>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="Radio2" value="option2">
+                        <label class="form-check-label" for="Radio2">
+                             Buscar por ano
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
+        <% if(erro){ %>
+            <div class="erro"><%= erro %></div>
+        <% } else if(pesquisa){ %>
+            <div class="listagem">
+                <table class="table table-hover">
+                    <tr>
+                        <th>ID</th>
+                        <th>Título</th>
+                        <th>Autor</th>
+                        <th>Ano</th>
+                    </tr>
+                <% for(let i=0; i < resultados.length; i++){ %>
+                    <tr>
+                    <td><%= resultados[i].id %></td>
+                    <td><%= resultados[i].titulo %></td>
+                    <td><%= resultados[i].autor %></td>
+                    <td><%= resultados[i].ano %></td>
+                  </tr>
+                <% } %>
+                  </table>
+            </div>
+        <% } %>
+    </div>
+
+    <script>
+        document.getElementById("Radio1").addEventListener("click", function () {
+            document.getElementById("livro").disabled = false;
+            document.getElementsByName("ano")[0].disabled = true;
+        });
+    
+        document.getElementById("Radio2").addEventListener("click", function () {
+            document.getElementById("livro").disabled = true;
+            document.getElementsByName("ano")[0].disabled = false;
+        });
+    
+        document.getElementById("form").addEventListener("submit", function () {
+            if (document.getElementById("Radio2").checked) {
+                this.setAttribute("action", `/buscar/${document.getElementById("ano").value}`);
+            }
+        });
+    </script>
+    
+    
+    
+</body>
+
+</html>
