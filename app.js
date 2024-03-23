@@ -75,4 +75,5 @@ app.get('/buscar/:ano', (req, res) => {
   res.render("index" , {resultados,  erro: "", pesquisa: true});
 });
 
-app.listen(3000, () => console.log('Server ready'));
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Server ready on port ${port}`));
