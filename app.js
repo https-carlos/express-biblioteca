@@ -16,4 +16,7 @@ app.get('/buscar', query);
 
 app.get('/buscar/:ano', url);
 
-app.listen(3000, () => console.log('Server ready'));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+console.log(`O servidor está rodando na porta ${PORT}`);
+});
